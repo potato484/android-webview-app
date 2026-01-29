@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Linuxdo</string>
+    <string name="error_no_internet">无网络连接</string>
+    <string name="error_load_failed">页面加载失败</string>
+    <string name="error_http_failed">页面加载失败 (HTTP %d)</string>
+    <string name="btn_retry">重试</string>
+    <string name="action_settings">设置</string>
+    <string name="settings_title">设置</string>
+    <string name="url_label">目标网址</string>
+    <string name="url_hint">请输入 HTTPS 网址</string>
+    <string name="btn_save">保存</string>
+    <string name="btn_reset">恢复默认</string>
+    <string name="btn_clear_data">清除浏览数据</string>
+    <string name="error_https_required">仅支持 HTTPS 网址</string>
+    <string name="error_invalid_url">网址格式无效</string>
+    <string name="confirm_clear_data">确定清除所有浏览数据？</string>
+    <string name="dialog_confirm">确定</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="ssl_error_title">安全警告</string>
+    <string name="ssl_error_message">该网站的安全证书存在问题。是否继续访问？</string>
+    <string name="ssl_proceed">继续访问</string>
+    <string name="ssl_cancel">返回</string>
+    <string name="data_cleared">浏览数据已清除</string>
+    <string name="url_saved">网址已保存</string>
+    <string name="url_reset">已恢复默认网址</string>
+</resources>
