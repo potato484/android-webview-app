@@ -1,2 +1,11 @@
 .gradle/
 build/
+.ace-tool/
+.claude/
+.codex/
+.gemini/
+.trellis/
+.vscode
+openspec/
+AGENTS.md
+CLAUDE.md

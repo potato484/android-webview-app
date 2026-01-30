@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -43,4 +44,15 @@ dependencies {
     implementation("androidx.webkit:webkit:1.8.0")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    // Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
+
+    // Browser (Custom Tabs)
+    implementation("androidx.browser:browser:1.7.0")
+
+    // Gson
+    implementation("com.google.code.gson:gson:2.10.1")
 }

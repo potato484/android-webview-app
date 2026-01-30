@@ -1,133 +1,75 @@
-# android-webview-app
+# 网站存储仓库
 
-一个基于 **Android WebView** 的轻量壳应用，用来加载指定站点（默认 `https://linux.do`），并提供基础的错误提示、进度条与设置页。
+一个基于 **Android** 的网站书签管理应用，支持多种打开方式和浏览器选择。
 
 ## 功能概览
 
-- 启动页（Splash）+ 主页面 WebView
-- 顶部加载进度条
-- 无网络/加载失败提示 + 重试
-- 设置页：修改目标网址（仅允许 `https://`）、恢复默认、清除浏览数据（Cookie/WebStorage）
-- 简单的安全策略：禁用 file/content 访问、禁止 Mixed Content、默认不允许明文流量
+- **书签管理**：添加、编辑、删除、搜索网站书签
+- **多种打开方式**：
+  - Custom Tabs（系统浏览器内嵌页）
+  - 外部浏览器
+  - 应用内 WebView
+- **浏览器选择**：支持指定默认浏览器（Edge、QQ浏览器、Chrome 等）
+- **Material3 UI**：现代化界面设计，Blue Grey 配色主题
+- **安全策略**：HTTP 链接警告、SSL 错误提示
+
+## 项目结构
+
+```
+app/src/main/java/com/example/webviewapp/
+├── data/                    # 数据层
+│   ├── AppDatabase.kt       # Room 数据库
+│   ├── Bookmark.kt          # 书签实体
+│   ├── BookmarkDao.kt       # 数据访问对象
+│   ├── BookmarkRepository.kt
+│   └── OpenMode.kt          # 打开方式枚举
+├── ui/                      # UI 层
+│   ├── BookmarkListActivity.kt   # 主页面（书签列表）
+│   ├── BookmarkEditActivity.kt   # 书签编辑页
+│   ├── BookmarkAdapter.kt        # 列表适配器
+│   ├── WebViewActivity.kt        # 内置浏览器
+│   └── AppSettingsActivity.kt    # 全局设置
+├── util/                    # 工具类
+│   ├── BrowserChooser.kt    # 浏览器选择器
+│   ├── CustomTabsOpener.kt  # Custom Tabs 封装
+│   ├── AppPrefs.kt          # SharedPreferences
+│   └── UrlValidator.kt      # URL 校验
+└── config/
+    └── UrlConfigManager.kt  # URL 配置管理
+```
 
 ## 环境要求
 
 - Android Studio（建议使用自带的 JDK 17）
-- JDK 17（本项目 `compileOptions/kotlinOptions` 为 17）
+- JDK 17
 - Android SDK（`compileSdk/targetSdk = 34`，`minSdk = 24`）
-- 一台开启「USB 调试」的 Android 真机（或模拟器）
 
-## 快速开始（Android Studio）
-
-1. 用 Android Studio 打开目录：`android-webview-app/`
-2. 等待 Gradle Sync 完成
-3. 连接手机（开启「开发者选项」→「USB 调试」）
-4. 点击 **Run ▶**，选择设备后会自动编译并安装 `debug` 包
-
-## 命令行编译/安装
-
-在 `android-webview-app/` 目录下执行：
+## 快速开始
 
 ```bash
-# 只打 debug 包
+# 编译
 ./gradlew :app:assembleDebug
 
-# 编译并安装到已连接的设备（需要 adb 可用）
+# 安装到设备
 ./gradlew :app:installDebug
 ```
 
-Debug APK 默认输出位置：
+APK 输出位置：`app/build/outputs/apk/debug/app-debug.apk`
 
-- `android-webview-app/app/build/outputs/apk/debug/app-debug.apk`
+## 更新日志
 
-你也可以用 adb 手动安装：
+### v2.0 (2025-01-30)
 
-```bash
-adb devices
-adb install -r app/build/outputs/apk/debug/app-debug.apk
-```
+**重大更新**：从单一 WebView 应用升级为书签管理器
 
-## 配置目标网址
+- 新增书签列表、编辑、搜索功能
+- 支持多种打开方式（Custom Tabs / 外部浏览器 / WebView）
+- 支持指定默认浏览器（Edge、QQ浏览器、Chrome 等）
+- UI 全面升级：Material3 风格、Blue Grey 配色
+- 优化空态设计，提升用户体验
+- 修复 Android 11+ 浏览器检测问题
 
-### App 内设置
+### v1.0
 
-主页面右上角菜单进入设置页：
-
-- **保存**：校验 URL，要求必须以 `https://` 开头且为合法网址
-- **恢复默认**：恢复为 `UrlConfigManager.DEFAULT_URL`
-- **清除浏览数据**：清 Cookie + 清 WebStorage
-
-相关实现：
-
-- `android-webview-app/app/src/main/java/com/example/webviewapp/config/UrlConfigManager.kt`
-- `android-webview-app/app/src/main/java/com/example/webviewapp/SettingsActivity.kt`
-
-### 修改默认地址
-
-修改：
-
-- `android-webview-app/app/src/main/java/com/example/webviewapp/config/UrlConfigManager.kt` 里的 `DEFAULT_URL`
-
-## WebView 行为说明
-
-主页面实现：
-
-- `android-webview-app/app/src/main/java/com/example/webviewapp/MainActivity.kt`
-
-关键策略：
-
-- 仅允许在 WebView 内加载 **同 Host 的 HTTPS** 页面；跳转到其他 Host 或非 https 的链接会尝试用系统浏览器打开
-- `mixedContentMode = MIXED_CONTENT_NEVER_ALLOW`（禁止 https 页面加载 http 子资源）
-- `allowFileAccess/allowContentAccess = false`
-- 默认启用 `JavaScript` 与 `DOM Storage`
-- `usesCleartextTraffic = false`（见 `AndroidManifest.xml`）
-- 发生 SSL 错误时弹窗提示用户是否继续
-
-## Gradle 下载加速（可选）
-
-本项目的 `gradlew` 会读取 `gradle/wrapper/gradle-wrapper.properties` 里的 `distributionUrl` 来下载 Gradle 发行包。
-
-当前配置文件：
-
-- `android-webview-app/gradle/wrapper/gradle-wrapper.properties`
-
-如果你想临时指定下载地址，可以用环境变量覆盖：
-
-```bash
-GRADLE_DISTRIBUTION_URL="https://mirrors.cloud.tencent.com/gradle/gradle-8.2-bin.zip" ./gradlew --version
-```
-
-## 常见问题（Troubleshooting）
-
-### 1) `Duplicate resources`（launcher 图标重复）
-
-通常是同一个资源名在同一目录下同时存在 `.png` 和 `.xml`（例如 `mipmap-mdpi/ic_launcher.*`）。
-
-处理方式：
-
-- 保留 `mipmap-anydpi-v26/` 下的自适应图标 XML
-- 各 density（`mipmap-mdpi/hdpi/xhdpi/...`）下只保留 `.png`（不要再放同名 `.xml`）
-
-### 2) `Failed to load native library 'libnative-platform.so' for Linux amd64`
-
-通常是 Gradle 发行包解压/缓存损坏或环境不匹配导致。
-
-建议依次尝试：
-
-```bash
-rm -rf ~/.gradle/wrapper/dists/gradle-8.2
-./gradlew --version
-```
-
-如果仍失败，请确认：
-
-- 运行环境是标准的 x86_64 Linux（并具备常见的 glibc 运行时）
-- `~/.gradle/` 目录权限正常（不应出现无法删除/覆盖的文件）
-
-## Release 构建（签名）
-
-`release` 构建已启用 `minify` 与 `shrinkResources`（见 `app/build.gradle.kts`），要生成可安装的 release APK/AAB 需要配置签名：
-
-- Android Studio：`Build > Generate Signed Bundle / APK...`
-- 或在 `app/build.gradle.kts` 添加 `signingConfigs` / `buildTypes.release.signingConfig`
-
+- 基础 WebView 壳应用
+- 单一网址加载

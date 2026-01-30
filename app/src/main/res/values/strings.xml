@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Linuxdo</string>
+    <string name="app_name">网站存储仓库</string>
     <string name="error_no_internet">无网络连接</string>
     <string name="error_load_failed">页面加载失败</string>
     <string name="error_http_failed">页面加载失败 (HTTP %d)</string>
     <string name="btn_retry">重试</string>
     <string name="action_settings">设置</string>
+    <string name="action_search">搜索</string>
     <string name="settings_title">设置</string>
-    <string name="url_label">目标网址</string>
-    <string name="url_hint">请输入 HTTPS 网址</string>
     <string name="btn_save">保存</string>
-    <string name="btn_reset">恢复默认</string>
     <string name="btn_clear_data">清除浏览数据</string>
-    <string name="error_https_required">仅支持 HTTPS 网址</string>
     <string name="error_invalid_url">网址格式无效</string>
+    <string name="error_invalid_scheme">不支持的 URL 格式</string>
+    <string name="error_duplicate_url">该网址已存在</string>
     <string name="confirm_clear_data">确定清除所有浏览数据？</string>
     <string name="dialog_confirm">确定</string>
     <string name="dialog_cancel">取消</string>
@@ -22,6 +21,31 @@
     <string name="ssl_proceed">继续访问</string>
     <string name="ssl_cancel">返回</string>
     <string name="data_cleared">浏览数据已清除</string>
-    <string name="url_saved">网址已保存</string>
-    <string name="url_reset">已恢复默认网址</string>
+    <string name="empty_bookmarks">暂无书签</string>
+    <string name="empty_hint">点击右下角按钮添加第一个书签</string>
+    <string name="add_bookmark">添加书签</string>
+    <string name="edit_bookmark">编辑书签</string>
+    <string name="bookmark_edit_title">书签</string>
+    <string name="bookmark_title_hint">标题（可选）</string>
+    <string name="bookmark_url_hint">网址</string>
+    <string name="open_mode_label">打开方式</string>
+    <string name="open_mode_default">跟随全局默认</string>
+    <string name="open_mode_custom_tabs">系统浏览器（内嵌页）</string>
+    <string name="open_mode_external">系统浏览器（外部打开）</string>
+    <string name="open_mode_webview">应用内浏览器（WebView）</string>
+    <string name="default_open_mode_label">默认打开方式</string>
+    <string name="preferred_browser_label">默认浏览器</string>
+    <string name="preferred_browser_system_default">系统默认</string>
+    <string name="bookmark_browser_label">本书签浏览器</string>
+    <string name="bookmark_browser_follow_global">跟随默认浏览器</string>
+    <string name="confirm_http_label">每次打开 HTTP 链接时确认</string>
+    <string name="http_warning_title">安全警告</string>
+    <string name="http_warning_message">您即将打开一个 HTTP 链接，数据可能被窃听。是否继续？</string>
+    <string name="menu_edit">编辑</string>
+    <string name="menu_delete">删除</string>
+    <string name="confirm_delete_bookmark">确定删除书签 \"%1$s\"？</string>
+    <string name="error_open_failed">无法打开链接</string>
+    <string name="browser_chooser_title">选择浏览器</string>
+    <string name="browser_chooser_cancel">取消</string>
+    <string name="error_bookmark_not_found">书签不存在</string>
 </resources>
